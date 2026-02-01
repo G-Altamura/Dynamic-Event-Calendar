@@ -4,8 +4,9 @@ const mesiDellAnno={
              "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
         lunghMesi:[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     }
+let oggi= new Date();
 //prendi la data di oggi e usala per settare il mese di inizio (globale)  
-giorno=new Date();
+let giorno=new Date();
 //CREAZIONE DEI TD DELLA GRIGLIA all'onload
 function CreaLaGriglia() {
     let giornidelMeseCorrente=document.getElementById("giorniDelMese");
@@ -32,12 +33,20 @@ function CreaQuestoMese(){
     for (let i = 0; i < mesiDellAnno.lunghMesi[meseCorrente]; i++) {
         caselleTabella[giorno1+i].innerHTML=`${i+1}`;
     }
-    document.getElementById("meseAttuale").innerHTML=`${mesiDellAnno.mesi[meseCorrente]}`;
+    document.getElementById("meseAttuale").innerHTML=`${mesiDellAnno.mesi[meseCorrente]} - 
+    ${giorno.getFullYear()}`;
 }
 
-function CambioMese(){
-    //fa riferimento a mediDellAnno per aumentare o diminuire di 1 la posizione del mese
-    
+function CambioMese(modificaMese){
+    //eliminare il mese corrente, per fare spazio a quello nuovo
+    let caselleTabella= document.querySelectorAll("td");
+    for (let i = 0; i < caselleTabella.length; i++) {
+        caselleTabella[i].innerHTML="";
+    }
+    //per aumentare o diminuire di 1 la posizione del mese, aggiungi nell'HTML 
+    // un parametro per cambiare entrambi
+    giorno.setMonth(giorno.getMonth()+ modificaMese);
+    CreaQuestoMese();
 }
 
 

@@ -28,8 +28,8 @@ modificare ed eliminare eventi, con persistenza locale via LocalStorage.
 <body onload="CreaLaGriglia()">
     <header>
         <h2>Siamo nel mese di <span id="meseAttuale"></span></h2>
-        <button onclick="CambioMese()">Mese precedente</button>
-        <button onclick="CambioMese()">Mese successivo</button>
+        <button onclick="CambioMese(-1)">Mese precedente</button>
+        <button onclick="CambioMese(+1)">Mese successivo</button>
     </header>
     <main>
         <table >
