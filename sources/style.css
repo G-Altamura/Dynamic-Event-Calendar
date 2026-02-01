@@ -18,3 +18,10 @@ th, td{
     padding: 2rem 1.3rem;
     border: solid 2px lightgreen;
 }
+
+form {
+    text-align: center;
+    border: 0.5rem solid cadetblue;
+    padding: 1rem;
+    font-weight: 700;
+}

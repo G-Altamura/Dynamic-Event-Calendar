@@ -5,8 +5,12 @@ const mesiDellAnno={
         lunghMesi:[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     }
 let oggi= new Date();
+
 //prendi la data di oggi e usala per settare il mese di inizio (globale)  
 let giorno=new Date();
+//allacciamo la form al js
+let form=document.getElementById("contatto");
+
 //CREAZIONE DEI TD DELLA GRIGLIA all'onload
 function CreaLaGriglia() {
     let giornidelMeseCorrente=document.getElementById("giorniDelMese");
@@ -22,7 +26,8 @@ function CreaLaGriglia() {
     CreaQuestoMese();
 }
 
-//ABBINAMENTO DEI GIORNI DEL MESE AL POSTO DELLA GRIGLIA
+//ABBINAMENTO DEI GIORNI DEL MESE CORRENTE
+//GIORNO DEVE ESSERE SOVRASCRITTO
 function CreaQuestoMese(){
     //devo usare .getDate() per avere il giorno della settimana del primo del mese    
     giorno.setDate(1);
@@ -35,13 +40,17 @@ function CreaQuestoMese(){
     }
     document.getElementById("meseAttuale").innerHTML=`${mesiDellAnno.mesi[meseCorrente]} - 
     ${giorno.getFullYear()}`;
+    if(oggi.getFullYear()===giorno.getFullYear() && oggi.getMonth()===giorno.getMonth()){
+       caselleTabella[oggi.getDate()-1+giorno1].style.backgroundColor=`cadetblue`;
+    }
 }
-
+//I BOTTONI FANNO AVANZARE E RETROCEDERE IL CALENDARIO
 function CambioMese(modificaMese){
     //eliminare il mese corrente, per fare spazio a quello nuovo
     let caselleTabella= document.querySelectorAll("td");
     for (let i = 0; i < caselleTabella.length; i++) {
         caselleTabella[i].innerHTML="";
+        caselleTabella[i].style.backgroundColor=`white`;
     }
     //per aumentare o diminuire di 1 la posizione del mese, aggiungi nell'HTML 
     // un parametro per cambiare entrambi
@@ -49,4 +58,26 @@ function CambioMese(modificaMese){
     CreaQuestoMese();
 }
 
+//QUI VA IL FORM CHE SI ABBINA CON L'HTML
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    let nome=document.getElementById("nome");
+    let descrizione=document.getElementById("descrizione");
+    let data=document.getElementById("data");
+    let orario=document.getElementById("time");
+    //ORA DEVO ABBINARE LE INFORMAZIONI SULLO STESSO EVENTO
+    let ricordaLeInfo=[nome.value, descrizione.value, data.value, orario.value];
+    AggiungiUnImpegno(ricordaLeInfo);
+    nome.value="";
+    descrizione.value="";
+    data.value=0;
+    orario.value=0;
+})
 
+//PER ABBINARE L'IMPEGNO AL SUO GIORNO
+function AggiungiUnImpegno(nome, descrizione, data, orario){
+    if(data.value===giorno.toISOString().split("T")[0])
+        console.log(nome.value);
+        // =nome.value;
+
+}
