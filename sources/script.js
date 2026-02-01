@@ -1,15 +1,12 @@
-
-
-// let anno=date.getFullYear();
-// let mese=date.getMonth();
-// let mesiDellAnno = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
-// let questoMese = document.getElementById("meseCorrente");
-
-// let settimana=new Date;
-// let giorno= settimana.getDay()
-// document.getElementById("giornoDellaSettimana").innerHTML =giorno;
-
-//CREAZIONE DEI TD DELLA GRIGLIA
+//creo l'oggetto costante per avere i mesi e la loro lunghezza
+const mesiDellAnno={
+        mesi:["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio",
+             "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
+        lunghMesi:[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    }
+//prendi la data di oggi e usala per settare il mese di inizio (globale)  
+giorno=new Date();
+//CREAZIONE DEI TD DELLA GRIGLIA all'onload
 function CreaLaGriglia() {
     let giornidelMeseCorrente=document.getElementById("giorniDelMese");
     let myTabella="";
@@ -21,27 +18,26 @@ function CreaLaGriglia() {
     myTabella+="</tr>";   
     }
     giornidelMeseCorrente.innerHTML=myTabella;
-    creaQuestoMese();
+    CreaQuestoMese();
 }
 
 //ABBINAMENTO DEI GIORNI DEL MESE AL POSTO DELLA GRIGLIA
-function creaQuestoMese(){
-    let mesiDellAnno={
-        mesi:["Gen", "Feb", "Mar", "Apr", "Mag",
-             "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"],
-        lunghMesi:[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    }
-    //prendi la data di oggi e usala per settare il mese di inizio
-    let oggi= new Date();
+function CreaQuestoMese(){
     //devo usare .getDate() per avere il giorno della settimana del primo del mese    
-    oggi.setDate(1);
-    let meseCorrente=oggi.getMonth();
-    let giorno1= oggi.getDay();
+    giorno.setDate(1);
+    let meseCorrente=giorno.getMonth();
+    let giorno1= giorno.getDay();
     //creo un'array di caselle
     let caselleTabella= document.querySelectorAll("td");
     for (let i = 0; i < mesiDellAnno.lunghMesi[meseCorrente]; i++) {
         caselleTabella[giorno1+i].innerHTML=`${i+1}`;
     }
+    document.getElementById("meseAttuale").innerHTML=`${mesiDellAnno.mesi[meseCorrente]}`;
+}
+
+function CambioMese(){
+    //fa riferimento a mediDellAnno per aumentare o diminuire di 1 la posizione del mese
+    
 }
 
 
