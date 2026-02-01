@@ -1,0 +1,66 @@
+<!-- ## ESERCIZIO 2: Calendario Eventi Dinamico
+### Descrizione del Progetto
+Creare un **pianificatore eventi** mensile con vista calendario interattivo. L'utente può aggiungere, 
+modificare ed eliminare eventi, con persistenza locale via LocalStorage.
+### Requisiti Funzionali
+1. **Vista Calendario**: Griglia 7×6 giorni con evidenziazione corrente
+2. **Aggiungi Evento**: Modal con data, ora, titolo, descrizione
+3. **Gestione Eventi**: Click giorno mostra/eliminare eventi
+4. **Navigazione**: Freccia mese precedente/successivo
+5. **Responsive**: Layout colonna singola su mobile
+┌─────────────────────────────────────┐
+│ HEADER: Mese/Anno ← → Aggiungi │
+├─────────────────────────────────────┤
+│ CALENDARIO 7×6 │ EVENTI GIORNO │
+│ Responsive │ + Form │
+├─────────────────────────────────────┤
+│ FOOTER: Totale eventi mese │
+└─────────────────────────────────────┘ -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio_2</title>
+    <link rel="stylesheet" href="sources/secondo_esercizio.css">
+    <script src="sources/secondo_esercizio.js"></script>
+</head>
+<body>
+    <header>
+        <h2 onclick="creaQuestoMese()">Siamo nel mese di</h2><span id="meseCorrente"></span>
+        <button onclick="indietroUnMese">Mese precedente</button>
+        <button onclick="avantiUnMese">Mese successivo</button>
+    </header>
+    <main>
+        <table >
+            <thead>
+                <tr>
+                    <th class="giorniDellaSettimana">Lunedì</th>
+                    <th class="giorniDellaSettimana">Martedì</th>
+                    <th class="giorniDellaSettimana">Mercoledì</th>
+                    <th class="giorniDellaSettimana">Giovedì</th>
+                    <th class="giorniDellaSettimana">Venerdì</th>
+                    <th class="giorniDellaSettimana">Sabato</th>
+                    <th class="giorniDellaSettimana">Domenica</th>
+                </tr>
+            </thead>
+            <tbody id="giorniDelMese"></tbody>
+        </table>        
+        <form>
+            <p>Aggiungi nuovo evento:</p>
+            <label for="nome">Nome dell'evento:</label>
+            <input type="text" id="nome" name="nome"><br>
+            <label for="descrizione">Descrizione dell'evento:</label>
+            <input type="text" id="descrizione" name="descrizione"><br>
+            <label for="data">Giorno dell'evento</label>
+            <input type="date" id="data" name="data"><br>
+            <label for="orario">Ora dell'evento:</label>
+            <input type="time" id="time" name="time"><br>
+            <button onclick="aggiungiEvento">Aggiungi l'evento!</button>
+        </form>
+    </main>
+    <footer>
+        <h2>Totale eventi del mese:</h2><span id="contaEventi"></span>
+    </footer>
+</body>
+</html>
