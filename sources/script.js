@@ -1,3 +1,4 @@
+let Agenda={};
 //creo l'oggetto costante per avere i mesi e la loro lunghezza
 const mesiDellAnno={
         mesi:["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio",
@@ -37,6 +38,9 @@ function CreaQuestoMese(){
     let caselleTabella= document.querySelectorAll("td");
     for (let i = 0; i < mesiDellAnno.lunghMesi[meseCorrente]; i++) {
         caselleTabella[giorno1+i].innerHTML=`${i+1}`;
+        //ora le caselle sono abbinate alla loro data
+        let giornoX=`${giorno.getFullYear()}-`+`${giorno.getMonth()+1}`.padStart(2, '0')+
+        `-`+`${i+1}`.padStart(2, '0');
     }
     document.getElementById("meseAttuale").innerHTML=`${mesiDellAnno.mesi[meseCorrente]} - 
     ${giorno.getFullYear()}`;
@@ -64,20 +68,35 @@ form.addEventListener("submit", function(event) {
     let nome=document.getElementById("nome");
     let descrizione=document.getElementById("descrizione");
     let data=document.getElementById("data");
-    let orario=document.getElementById("time");
+    let orario=document.getElementById("orario");
     //ORA DEVO ABBINARE LE INFORMAZIONI SULLO STESSO EVENTO
-    let ricordaLeInfo=[nome.value, descrizione.value, data.value, orario.value];
-    AggiungiUnImpegno(ricordaLeInfo);
+    AggiungiUnImpegno(nome.value, descrizione.value, data.value, orario.value);
     nome.value="";
     descrizione.value="";
-    data.value=0;
-    orario.value=0;
+    data.value="";
+    orario.value="";
 })
 
 //PER ABBINARE L'IMPEGNO AL SUO GIORNO
 function AggiungiUnImpegno(nome, descrizione, data, orario){
-    if(data.value===giorno.toISOString().split("T")[0])
-        console.log(nome.value);
-        // =nome.value;
-
+    let pagina = {};
+    let entry = {descrizione:descrizione, orario:orario};
+    
+    if (data in Agenda){
+            //i e nome_temp sono delle temporanee per essere sicuri che Agenda non
+            //sovrascriva impegni lo stesso giorno e potenzialmente lo stesso nome
+            let i=1;
+            let nome_temp=nome;
+            pagina = Agenda[data];
+            while (nome_temp in pagina) {
+                nome_temp=`${nome}(${i++})`;
+            }
+            nome=nome_temp;
+    }
+    pagina[nome]=entry;
+    Agenda[data] = pagina;
+    console.log(Agenda);
+    // if(data.valueAsNumber===giorno.toISOString().split("T")[0])
 }
+
+//Agenda['2026-02-26']['MugiBugi'].orario

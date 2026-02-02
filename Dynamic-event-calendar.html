@@ -1,7 +1,7 @@
 <!-- ## ESERCIZIO 2: Calendario Eventi Dinamico
 ### Descrizione del Progetto
 Creare un **pianificatore eventi** mensile con vista calendario interattivo. 
-L'utente può aggiungere, modificare ed eliminare eventi.
+L'utente può aggiungere, modificare ed eliminare eventi, con persistenza locale via LocalStorage.
 ### Requisiti Funzionali
 1. **Vista Calendario**: Griglia 7×6 giorni con evidenziazione corrente
 2. **Aggiungi Evento**: Modal con data, ora, titolo, descrizione
@@ -55,7 +55,7 @@ L'utente può aggiungere, modificare ed eliminare eventi.
             <label for="data">Giorno dell'evento</label>
             <input type="date" id="data" name="data"><br>
             <label for="orario">Ora dell'evento:</label>
-            <input type="time" id="time" name="orario"><br>
+            <input type="time" id="orario" name="orario"><br>
             <button type="submit">Aggiungi l'evento!</button>
         </form>
     </main>
