@@ -38,9 +38,14 @@ function CreaQuestoMese(){
     let caselleTabella= document.querySelectorAll("td");
     for (let i = 0; i < mesiDellAnno.lunghMesi[meseCorrente]; i++) {
         caselleTabella[giorno1+i].innerHTML=`${i+1}`;
-        //ora le caselle sono abbinate alla loro data
+        //ora le caselle sono abbinate alla loro data (scritta alla stessa maniera!)
         let giornoX=`${giorno.getFullYear()}-`+`${giorno.getMonth()+1}`.padStart(2, '0')+
         `-`+`${i+1}`.padStart(2, '0');
+        if (giornoX in Agenda) {
+            let nomeImpegno=document.createElement("span");
+            nomeImpegno.innerHTML=Object.keys(Agenda[giornoX]);
+            caselleTabella[giorno1+i].appendChild(nomeImpegno);
+        }
     }
     document.getElementById("meseAttuale").innerHTML=`${mesiDellAnno.mesi[meseCorrente]} - 
     ${giorno.getFullYear()}`;
@@ -81,7 +86,7 @@ form.addEventListener("submit", function(event) {
 function AggiungiUnImpegno(nome, descrizione, data, orario){
     let pagina = {};
     let entry = {descrizione:descrizione, orario:orario};
-    
+    //gli impegni vengono visualizzati così: Agenda['2026-02-26']['MugiBugi'].orario
     if (data in Agenda){
             //i e nome_temp sono delle temporanee per essere sicuri che Agenda non
             //sovrascriva impegni lo stesso giorno e potenzialmente lo stesso nome
@@ -95,8 +100,10 @@ function AggiungiUnImpegno(nome, descrizione, data, orario){
     }
     pagina[nome]=entry;
     Agenda[data] = pagina;
-    console.log(Agenda);
+    CreaQuestoMese();
     // if(data.valueAsNumber===giorno.toISOString().split("T")[0])
 }
+//COSE DA FARE
+//aggiungere l'evento onclick sulla voce del titolo nella tabella
+//aggiugere JSON per trattenere i dati
 
-//Agenda['2026-02-26']['MugiBugi'].orario
