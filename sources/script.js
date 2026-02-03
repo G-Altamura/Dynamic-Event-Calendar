@@ -26,31 +26,62 @@ function CreaLaGriglia() {
     giornidelMeseCorrente.innerHTML=myTabella;
     CreaQuestoMese();
 }
-
+//se ci sono impegni già presenti, ricordateli
+if (localStorage.getItem("cardImpegno") != null) {
+Agenda = JSON.parse(localStorage.getItem("cardImpegno")); 
+}
 //ABBINAMENTO DEI GIORNI DEL MESE CORRENTE
 //GIORNO DEVE ESSERE SOVRASCRITTO
-function CreaQuestoMese(){
+function CreaQuestoMese(pagina){
     //devo usare .getDate() per avere il giorno della settimana del primo del mese    
     giorno.setDate(1);
     let meseCorrente=giorno.getMonth();
     let giorno1= giorno.getDay();
+    //let ricordati=document.getElementById("cardImpegno");
     //creo un'array di caselle
     let caselleTabella= document.querySelectorAll("td");
     for (let i = 0; i < mesiDellAnno.lunghMesi[meseCorrente]; i++) {
-        caselleTabella[giorno1+i].innerHTML=`${i+1}`;
+        caselleTabella[giorno1+i].innerHTML=`${i+1}  `;
+        //CONTROLLARE QUI
+        if (caselleTabella[giorno1+i]==""){
+            myTabella.display=none;
+        }
+
         //ora le caselle sono abbinate alla loro data (scritta alla stessa maniera!)
         let giornoX=`${giorno.getFullYear()}-`+`${giorno.getMonth()+1}`.padStart(2, '0')+
         `-`+`${i+1}`.padStart(2, '0');
         if (giornoX in Agenda) {
             let nomeImpegno=document.createElement("span");
-            nomeImpegno.innerHTML=Object.keys(Agenda[giornoX]);
+            let nomeEvento=document.createElement("h3");
+            let descEvento=document.createElement("p");
+            let oraEvento=document.createElement("p");
+            let buttonEvento=document.createElement("button");
+            // nomeImpegno.innerHTML=Object.keys(Agenda[giornoX]);
+            nomeImpegno.innerText = Object.keys(Agenda[giornoX])[0];
+            nomeImpegno.addEventListener("click", function(){
+                //svuota la card se è piena
+                document.getElementById("cardImpegno").innerHTML = '';
+                let evento = Agenda[giornoX][Object.keys(Agenda[giornoX])[0]];
+                nomeEvento.textContent = evento.nome;
+                descEvento.textContent = evento.descrizione;
+                oraEvento.textContent  = evento.orario;
+                buttonEvento.innerHTML="Elimina Evento";
+                buttonEvento.addEventListener("click", function(){
+                    document.getElementById("cardImpegno").innerHTML = '';
+                })
+                document.getElementById("cardImpegno").appendChild(nomeEvento);
+                document.getElementById("cardImpegno").appendChild(descEvento);
+                document.getElementById("cardImpegno").appendChild(oraEvento);
+                document.getElementById("cardImpegno").appendChild(buttonEvento);
+            })
             caselleTabella[giorno1+i].appendChild(nomeImpegno);
+            localStorage.setItem("cardImpegno", JSON.stringify(Agenda));
         }
     }
     document.getElementById("meseAttuale").innerHTML=`${mesiDellAnno.mesi[meseCorrente]} - 
     ${giorno.getFullYear()}`;
     if(oggi.getFullYear()===giorno.getFullYear() && oggi.getMonth()===giorno.getMonth()){
-       caselleTabella[oggi.getDate()-1+giorno1].style.backgroundColor=`cadetblue`;
+       caselleTabella[oggi.getDate()-1+giorno1].style.backgroundColor=`var(--color-bg)`;
     }
 }
 //I BOTTONI FANNO AVANZARE E RETROCEDERE IL CALENDARIO
@@ -85,7 +116,7 @@ form.addEventListener("submit", function(event) {
 //PER ABBINARE L'IMPEGNO AL SUO GIORNO
 function AggiungiUnImpegno(nome, descrizione, data, orario){
     let pagina = {};
-    let entry = {descrizione:descrizione, orario:orario};
+    let entry = {nome: nome, descrizione:descrizione, orario:orario};
     //gli impegni vengono visualizzati così: Agenda['2026-02-26']['MugiBugi'].orario
     if (data in Agenda){
             //i e nome_temp sono delle temporanee per essere sicuri che Agenda non
@@ -100,10 +131,9 @@ function AggiungiUnImpegno(nome, descrizione, data, orario){
     }
     pagina[nome]=entry;
     Agenda[data] = pagina;
-    CreaQuestoMese();
+    CreaQuestoMese(pagina);
     // if(data.valueAsNumber===giorno.toISOString().split("T")[0])
 }
 //COSE DA FARE
 //aggiungere l'evento onclick sulla voce del titolo nella tabella
 //aggiugere JSON per trattenere i dati
-

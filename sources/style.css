@@ -1,27 +1,73 @@
 * {
     padding: 0;
-    padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
+:root {
+    --color-bg: rgb(141, 137, 166);
+    --color-text: rgb(108, 56, 112);
+    --color-accent: rgb(191, 171, 203);
+    --color-light: rgb(242, 213, 248);
+    --padding-main: 5px 42px;
+    --font-main: "Trebuchet MS", Helvetica, sans-serif;
+    --font-accent: "Lucida Console", Monaco, monospace;
+}
+ body{
+    font-family: var(--font-main);
+    background-color: var(--color-accent);
+ }
 
 header, footer {
-    background-color: lightblue;
-    color: white;
+    font-family: var(--font-accent);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
+}
+button {
+color: var(--color-text); 
+font-size: 14px; 
+line-height: 14px; 
+padding: 12px; 
+border-radius: 17px; 
+border: 2px solid var(--color-text); 
+display: inline-block;
+}
+
+button:hover {
+background: var(--color-text); 
+color: var(--color-light);
+}
+
+button:active {
+background: var(--color-text); 
+color: var(--color-light);
+}
+table{
+    margin: 15px auto;
 }
 table, tbody, thead{
-    border: solid 2px lightgreen;
+    border: solid 2px var(--color-text);
     border-collapse: collapse;
-    margin: 0 auto;
+    background-color: whitesmoke;
+}
+th{
+    text-transform: uppercase;
+    background-color: var(--color-text);
+    color: var(--color-light);
 }
 th, td{
     padding: 2rem 1.3rem;
-    border: solid 2px lightgreen;
+    border: solid 2px var(--color-text);
 }
 
-form {
+#cardImpegno, #contatto {
     text-align: center;
-    border: 0.5rem solid cadetblue;
+    color: var(--color-text);
     padding: 1rem;
     font-weight: 700;
 }
