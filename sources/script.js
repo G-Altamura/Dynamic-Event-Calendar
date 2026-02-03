@@ -51,28 +51,39 @@ function CreaQuestoMese(pagina){
         let giornoX=`${giorno.getFullYear()}-`+`${giorno.getMonth()+1}`.padStart(2, '0')+
         `-`+`${i+1}`.padStart(2, '0');
         if (giornoX in Agenda) {
+            
             let nomeImpegno=document.createElement("span");
-            let nomeEvento=document.createElement("h3");
-            let descEvento=document.createElement("p");
-            let oraEvento=document.createElement("p");
-            let buttonEvento=document.createElement("button");
+
             // nomeImpegno.innerHTML=Object.keys(Agenda[giornoX]);
             nomeImpegno.innerText = Object.keys(Agenda[giornoX])[0];
+            
             nomeImpegno.addEventListener("click", function(){
                 //svuota la card se è piena
                 document.getElementById("cardImpegno").innerHTML = '';
-                let evento = Agenda[giornoX][Object.keys(Agenda[giornoX])[0]];
-                nomeEvento.textContent = evento.nome;
-                descEvento.textContent = evento.descrizione;
-                oraEvento.textContent  = evento.orario;
-                buttonEvento.innerHTML="Elimina Evento";
+                //aggiungo un ciclo per avere più eventi nella stessa casella
+                for (let i in Agenda[giornoX]) {
+                    let contenitoreEvento=document.createElement("div");
+                    let nomeEvento=document.createElement("h3");
+                    let descEvento=document.createElement("p");
+                    let oraEvento=document.createElement("p");
+                    let buttonEvento=document.createElement("button");
+                    let evento = Agenda[giornoX][i];
+                    nomeEvento.textContent = evento.nome;
+                    descEvento.textContent = evento.descrizione;
+                    oraEvento.textContent  = evento.orario;
+                    buttonEvento.innerHTML="Chiudi Evento";
+                    document.getElementById("cardImpegno").appendChild(contenitoreEvento);
+                    contenitoreEvento.appendChild(nomeEvento);
+                    contenitoreEvento.appendChild(descEvento);
+                    contenitoreEvento.appendChild(oraEvento);
+                    contenitoreEvento.appendChild(buttonEvento);
+
                 buttonEvento.addEventListener("click", function(){
                     document.getElementById("cardImpegno").innerHTML = '';
                 })
-                document.getElementById("cardImpegno").appendChild(nomeEvento);
-                document.getElementById("cardImpegno").appendChild(descEvento);
-                document.getElementById("cardImpegno").appendChild(oraEvento);
-                document.getElementById("cardImpegno").appendChild(buttonEvento);
+                }
+
+                
             })
             caselleTabella[giorno1+i].appendChild(nomeImpegno);
             localStorage.setItem("cardImpegno", JSON.stringify(Agenda));
@@ -134,6 +145,4 @@ function AggiungiUnImpegno(nome, descrizione, data, orario){
     CreaQuestoMese(pagina);
     // if(data.valueAsNumber===giorno.toISOString().split("T")[0])
 }
-//COSE DA FARE
-//aggiungere l'evento onclick sulla voce del titolo nella tabella
-//aggiugere JSON per trattenere i dati
+
