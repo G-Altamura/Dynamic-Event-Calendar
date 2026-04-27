@@ -2,8 +2,8 @@
 A monthly event planner with an interactive calendar interface. Users can add, edit, and delete events, navigate between months, and view daily events. 
 Designed as a front-end exercise focused on interactivity and responsive layout.
 
-## 🔗 Live Demo
-[Apri il progetto](https://g-altamura.github.io/Dynamic-Event-Calendar/)
+## Live Demo
+[My project](https://g-altamura.github.io/Dynamic-Event-Calendar/)
 
 # Project Description  
 Create a monthly event planner with an interactive calendar view.  
